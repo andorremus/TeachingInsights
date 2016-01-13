@@ -1,0 +1,11 @@
+﻿<UserControl x:Class="TeachingInsights2.controls.WebcamFeed"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" Height="275" Width="587">
+    <Grid HorizontalAlignment="Left" Width="577" Height="265" VerticalAlignment="Top">
+        <Image HorizontalAlignment="Left" Height="249" Margin="10,10,0,0" VerticalAlignment="Top" Width="557"/>
+
+    </Grid>
+</UserControl>

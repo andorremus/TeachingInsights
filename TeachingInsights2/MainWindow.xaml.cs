@@ -16,6 +16,9 @@ using Affdex;
 using System.IO;
 using System.Reflection;
 using System.Collections.Specialized;
+using Sparrow.Chart;
+
+using System.Collections.ObjectModel;
 
 namespace TeachingInsights2
 {
@@ -27,6 +30,7 @@ namespace TeachingInsights2
         #region private variables
 
         private Affdex.CameraDetector cameraDetector;
+        private int counter = 0;
 
 
         #endregion
@@ -46,11 +50,13 @@ namespace TeachingInsights2
                 {
                     //this.textBox.Text = face.Expressions.Attention.ToString();                   
                 }));
+                
             }
         }
         public void onImageCapture(Affdex.Frame image)
         {
             DisplayImage(image);
+            UpdateExpressionsDials();
         }
 
         public void DisplayImage(Affdex.Frame image)
@@ -59,7 +65,7 @@ namespace TeachingInsights2
                 {
                     try
                     {
-                        CapturedImage.Source = Utility.BuildImage(image.getBGRByteArray(), image.getWidth(), image.getHeight());
+                       CameraFeed.Source = Utility.BuildImage(image.getBGRByteArray(), image.getWidth(), image.getHeight());
 
                         if (image != null)
                         {
@@ -155,6 +161,10 @@ namespace TeachingInsights2
                 cameraDetector.setDetectAttention(true);
                 cameraDetector.setDetectEngagement(true);
                 cameraDetector.setDetectChinRaise(true);
+                cameraDetector.setDetectBrowFurrow(true);
+                cameraDetector.setDetectEyeClosure(true);
+                cameraDetector.setDetectBrowRaise(true);
+                cameraDetector.setDetectChinRaise(true);
                 
                 cameraDetector.setImageListener(this);
                 cameraDetector.setProcessStatusListener(this);
@@ -244,25 +254,76 @@ namespace TeachingInsights2
             {
                 var result = this.Dispatcher.BeginInvoke((Action)(() =>
                     {
-                        attentionValue.Text = (Convert.ToInt32(Math.Round(face.Expressions.Attention, MidpointRounding.AwayFromZero))).ToString();
-                        if((face.Expressions.Attention) > 0 && face.Expressions.Attention < 34)
-                            attentionValue.Background = new SolidColorBrush(Colors.Red);
-                        if((face.Expressions.Attention) > 33 && face.Expressions.Attention < 67)
-                            attentionValue.Background = new SolidColorBrush(Colors.Blue);
-                        if((face.Expressions.Attention) > 66 && face.Expressions.Attention < 101)
-                            attentionValue.Background = new SolidColorBrush(Colors.LimeGreen);
 
-
-                        engagementValue.Text = (Convert.ToInt32(Math.Round(face.Emotions.Engagement, MidpointRounding.AwayFromZero))).ToString();    
-                        if((face.Emotions.Engagement) > 0 && face.Emotions.Engagement < 34)
-                            engagementValue.Background = new SolidColorBrush(Colors.Red);
-                        if((face.Emotions.Engagement) > 33 && face.Emotions.Engagement < 67)
-                            engagementValue.Background = new SolidColorBrush(Colors.Blue);
-                        if((face.Emotions.Engagement) > 66 && face.Emotions.Engagement < 101)
-                            engagementValue.Background = new SolidColorBrush(Colors.LimeGreen);                      
                         
-                    
+
+                        if (face != null)
+                        {
+                            chinRaiseValue.Text = (Convert.ToInt32(Math.Round(face.Expressions.ChinRaise, MidpointRounding.AwayFromZero))).ToString();
+                            attentionValue.Text = (Convert.ToInt32(Math.Round(face.Expressions.Attention, MidpointRounding.AwayFromZero))).ToString();
+                            engagementValue.Text = (Convert.ToInt32(Math.Round(face.Emotions.Engagement, MidpointRounding.AwayFromZero))).ToString();
+                            browFurrowValue.Text = (Convert.ToInt32(Math.Round(face.Expressions.BrowFurrow, MidpointRounding.AwayFromZero))).ToString();
+                            eyeClosureValue.Text = (Convert.ToInt32(Math.Round(face.Expressions.EyeClosure, MidpointRounding.AwayFromZero))).ToString();
+                            browRaiseValue.Text = (Convert.ToInt32(Math.Round(face.Expressions.BrowRaise, MidpointRounding.AwayFromZero))).ToString();
+
+                            faceDetectedEllipse.Fill = new SolidColorBrush(Colors.Green);
+                            if ((face.Expressions.Attention) > 0 && face.Expressions.Attention < 34)
+                                attentionValue.Background = new SolidColorBrush(Colors.Red);
+                            if ((face.Expressions.Attention) > 33 && face.Expressions.Attention < 67)
+                                attentionValue.Background = new SolidColorBrush(Colors.LightBlue);
+                            if ((face.Expressions.Attention) > 66 && face.Expressions.Attention < 101)
+                                attentionValue.Background = new SolidColorBrush(Colors.LimeGreen);
+
+
+                            if ((face.Emotions.Engagement) > 0 && face.Emotions.Engagement < 34)
+                                engagementValue.Background = new SolidColorBrush(Colors.Red);
+                            if ((face.Emotions.Engagement) > 33 && face.Emotions.Engagement < 67)
+                                engagementValue.Background = new SolidColorBrush(Colors.LightBlue);
+                            if ((face.Emotions.Engagement) > 66 && face.Emotions.Engagement < 101)
+                                engagementValue.Background = new SolidColorBrush(Colors.LimeGreen);
+
+                            if ((face.Expressions.BrowFurrow) > 0 && face.Expressions.BrowFurrow < 34)
+                                browFurrowValue.Background = new SolidColorBrush(Colors.Red);
+                            if ((face.Expressions.BrowFurrow) > 33 && face.Expressions.BrowFurrow < 67)
+                                browFurrowValue.Background = new SolidColorBrush(Colors.LightBlue);
+                            if ((face.Expressions.BrowFurrow) > 66 && face.Expressions.BrowFurrow < 101)
+                                browFurrowValue.Background = new SolidColorBrush(Colors.LimeGreen);
+
+                            if ((face.Expressions.EyeClosure) > 0 && face.Expressions.EyeClosure < 34)
+                                eyeClosureValue.Background = new SolidColorBrush(Colors.Red);
+                            if ((face.Expressions.EyeClosure) > 33 && face.Expressions.EyeClosure < 67)
+                                eyeClosureValue.Background = new SolidColorBrush(Colors.LightBlue);
+                            if ((face.Expressions.EyeClosure) > 66 && face.Expressions.EyeClosure < 101)
+                                eyeClosureValue.Background = new SolidColorBrush(Colors.LimeGreen);
+
+                            
+                            if ((face.Expressions.BrowRaise) > 0 && face.Expressions.BrowRaise < 34)
+                                browRaiseValue.Background = new SolidColorBrush(Colors.Red);
+                            if ((face.Expressions.BrowRaise) > 33 && face.Expressions.BrowRaise < 67)
+                                browRaiseValue.Background = new SolidColorBrush(Colors.LightBlue);
+                            if ((face.Expressions.BrowRaise) > 66 && face.Expressions.BrowRaise < 101)
+                                browRaiseValue.Background = new SolidColorBrush(Colors.LimeGreen);
+
+                            if ((face.Expressions.ChinRaise) > 0 && face.Expressions.ChinRaise < 34)
+                                chinRaiseValue.Background = new SolidColorBrush(Colors.Red);
+                            if ((face.Expressions.ChinRaise) > 33 && face.Expressions.ChinRaise < 67)
+                                chinRaiseValue.Background = new SolidColorBrush(Colors.LightBlue);
+                            if ((face.Expressions.ChinRaise) > 66 && face.Expressions.ChinRaise < 101)
+                                chinRaiseValue.Background = new SolidColorBrush(Colors.LimeGreen);
+
+
+
+                            //ViewModel.Collection.Add(new ViewModel.Point { X = counter, Y = face.Expressions.Attention });
+                            //counter += 0.0001;
+                            ViewModel.AddFurrow(new ViewModel.Point { X = counter, Y = face.Expressions.BrowFurrow });
+                            ViewModel.Add(new ViewModel.Point { X = counter, Y = face.Expressions.BrowRaise });
+                            counter++;
+                        }
+
+                        
                     }));
+                    
+
             }
             catch(Exception ex)
             {
