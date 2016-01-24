@@ -19,6 +19,12 @@ using System.Collections.Specialized;
 using Sparrow.Chart;
 
 using System.Collections.ObjectModel;
+using TeachingInsights2.ViewModel;
+using AForge.Video.DirectShow;
+using AForge.Video;
+using System.Drawing;
+using System.Drawing.Imaging;
+using DotImaging;
 
 namespace TeachingInsights2
 {
@@ -27,16 +33,24 @@ namespace TeachingInsights2
     /// </summary>
     public partial class MainWindow : Window,Affdex.ImageListener, Affdex.ProcessStatusListener
     {
+       
         #region private variables
-
+        private WebcamImageViewModel webcamImgVM;
         private Affdex.CameraDetector cameraDetector;
         private int counter = 0;
+        private VideoCaptureDevice videoSource;        
+        private String currentDir;
+        private String tempImgDir;
+        private ImageStreamWriter writer;
+
 
 
         #endregion
         public MainWindow()
         {
             InitializeComponent();
+            webcamImgVM = new WebcamImageViewModel();
+            currentDir = Environment.CurrentDirectory;
         }
 
 
@@ -56,7 +70,11 @@ namespace TeachingInsights2
         public void onImageCapture(Affdex.Frame image)
         {
             DisplayImage(image);
-            UpdateExpressionsDials();
+            //Image<Bgr<byte>> imagex;
+            
+            //writer.Write((IImage)imagex);
+
+            //UpdateExpressionsDials();
         }
 
         public void DisplayImage(Affdex.Frame image)
@@ -65,7 +83,10 @@ namespace TeachingInsights2
                 {
                     try
                     {
-                       CameraFeed.Source = Utility.BuildImage(image.getBGRByteArray(), image.getWidth(), image.getHeight());
+                        BitmapSource x = Utility.BuildImage(image.getBGRByteArray(), image.getWidth(), image.getHeight());
+                        webcamImgVM.RenderedImage = x;
+                        
+                        //videoWriter.WriteVideoFrame(Utility.BitmapFromSource(x));
 
                         if (image != null)
                         {
@@ -79,6 +100,10 @@ namespace TeachingInsights2
                     }
 
                 }));
+            //BitmapSource xz = Utility.BuildImage(image.getBGRByteArray(), image.getWidth(), image.getHeight());
+            //Bitmap x3 = Utility.BitmapFromSource(xz);
+            //x3.Save(currentDir + "/tempImg/img" + counter + ".jpeg", ImageFormat.Jpeg);
+            //counter++;
 
         }
 
@@ -98,35 +123,6 @@ namespace TeachingInsights2
 
         }
 
-        private String GetClassifierDataFolder()
-        {
-            String affdexClassifierDir = "C:\\Projects\\TeachingInsights2\\TeachingInsights2\\data\\";
-            if (String.IsNullOrEmpty(affdexClassifierDir))
-            {
-                ShowExceptionAndShutDown("AFFDEX_DATA_DIR environment variable (Classifier Data Directory) is not set");
-            }
-
-            DirectoryInfo directoryInfo = new DirectoryInfo(affdexClassifierDir);
-            if (!directoryInfo.Exists)
-            {
-                ShowExceptionAndShutDown("AFFDEX_DATA_DIR (Classifier Data Directory) is set to an invalid folder location");
-            }
-
-            return affdexClassifierDir;
-        }
-
-        private String GetAffdexLicense()
-        {
-            String licensePath = String.Empty;
-            licensePath = "C:\\Projects\\TeachingInsights2\\TeachingInsights2\\license\\sdk_andor.remus@gmail.com.license";
-            //if (String.IsNullOrEmpty(licensePath))
-            //{
-             //   ShowExceptionAndShutDown("AFFDEX_LICENSE_DIR environment variable (Affdex License Folder) is not set");
-            //}
-
-            return licensePath;
-        }
-
         private void ShowExceptionAndShutDown(String exceptionMessage)
         {
             MessageBoxResult result = MessageBox.Show(exceptionMessage,
@@ -135,7 +131,7 @@ namespace TeachingInsights2
                                                         MessageBoxImage.Error);
             this.Dispatcher.BeginInvoke((Action)(() =>
             {
-                //StopCameraProcessing();
+                StopCameraProcessing();
             }));
         }
 
@@ -145,17 +141,75 @@ namespace TeachingInsights2
             if (cameraDetector != null && cameraDetector.isRunning())
                 running = true;
 
+            
+            FilterInfoCollection sources = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            foreach (FilterInfo fi in sources)
+            {
+                Console.WriteLine(fi.Name);
+            }
+
+            if (sources != null)
+            {
+                videoSource = new VideoCaptureDevice(sources[0].MonikerString);
+
+                try
+                {
+                    if(videoSource.VideoCapabilities.Length > 0)
+                    {
+                        string highestSolution = "0;0";
+
+                        for(int i = 0 ; i< videoSource.VideoCapabilities.Length; i++)
+                        {
+                            highestSolution = videoSource.VideoCapabilities[i].FrameSize.Width.ToString() + ";" + i.ToString();
+                        }
+                        videoSource.VideoResolution = videoSource.VideoCapabilities[Convert.ToInt32(highestSolution.Split(';')[1])];
+                    }
+                }
+                catch
+                {
+
+                }
+                //videoWriter = new VideoFileWriter();
+                //videoWriter.Open(@"../test_video.mp4", 640, 480, 25, VideoCodec.MPEG4, 10000);
+
+                
+                videoSource.NewFrame += new AForge.Video.NewFrameEventHandler(VideoSource_NewFrame);
+                videoSource.Start();
+
+            }
+            
+            System.IO.Directory.CreateDirectory("tempImg");
+            //writer = new VideoWriter(
+            //                                 fileName: "./output.avi",
+            //                                 frameSize: new DotImaging.Primitives2D.Size(1280, 720),
+            //                                 fps: 30
+            //                               );          
+            
             if (!running)
                 StartCapturing();
 
+        }
+
+        void VideoSource_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
+        {
+            this.Dispatcher.BeginInvoke((Action)(() =>
+            {
+                //image.Source = (ImageSource)eventArgs.Frame.Clone();
+                
+            }));
+            using (Bitmap img = (Bitmap)eventArgs.Frame.Clone())
+            {
+                img.Save(currentDir+"/tempImg/img" + counter+".jpeg", ImageFormat.Jpeg);
+                counter++;
+            }
         }
 
         public void StartCapturing()
         {
             try
             {
-                cameraDetector = new CameraDetector();
-                cameraDetector.setClassifierPath(GetClassifierDataFolder());
+                cameraDetector = new CameraDetector(0,30,30);
+                cameraDetector.setClassifierPath(Utility.GetClassifierDataFolder());
                 cameraDetector.setDetectAllExpressions(false);
                 cameraDetector.setDetectAllEmotions(false);
                 cameraDetector.setDetectAttention(true);
@@ -167,10 +221,10 @@ namespace TeachingInsights2
                 cameraDetector.setDetectChinRaise(true);
                 
                 cameraDetector.setImageListener(this);
-                cameraDetector.setProcessStatusListener(this);
 
-                cameraDetector.setLicensePath(GetAffdexLicense());
-                cameraDetector.start();
+                cameraDetector.setLicensePath(Utility.GetAffdexLicense());
+                //cameraDetector.start();
+                //writer.Open();  
             }
             catch (Affdex.AffdexException ex)
             {
@@ -198,9 +252,14 @@ namespace TeachingInsights2
             }
         }
 
+        private FileInfo[] files;
         private void stopButton_Click(object sender, RoutedEventArgs e)
         {
             StopCameraProcessing();
+            videoSource.SignalToStop();
+            videoSource.Stop();
+            //videoWriter.Close();
+            
         }
 
         private void StopCameraProcessing()
@@ -209,9 +268,12 @@ namespace TeachingInsights2
             {
                 if((cameraDetector != null) && (cameraDetector.isRunning()))
                 {
+                    //writer.Close();
+                   // writer.Dispose();
                     cameraDetector.stop();
                     cameraDetector.Dispose();
                     cameraDetector = null;
+                    
                 }
             }
             catch(Exception ex)
@@ -315,9 +377,9 @@ namespace TeachingInsights2
 
                             //ViewModel.Collection.Add(new ViewModel.Point { X = counter, Y = face.Expressions.Attention });
                             //counter += 0.0001;
-                            ViewModel.AddFurrow(new ViewModel.Point { X = counter, Y = face.Expressions.BrowFurrow });
-                            ViewModel.Add(new ViewModel.Point { X = counter, Y = face.Expressions.BrowRaise });
-                            counter++;
+                            //DataViewModel.AddFurrow(new DataViewModel.Point { X = counter, Y = face.Expressions.BrowFurrow });
+                            //DataViewModel.Add(new DataViewModel.Point { X = counter, Y = face.Expressions.BrowRaise });
+                            //counter++;
                         }
 
                         
@@ -330,6 +392,60 @@ namespace TeachingInsights2
 
             }
 
+        }
+
+        private void makeAvi()
+        {   // reads all images in folder 
+            ImageStreamReader reader = new ImageDirectoryCapture(currentDir+"/tempImg/", "*.jpeg", recursive: false);
+            reader.Open();
+            writer = new VideoWriter(
+                                            fileName: "./output.avi",
+                                            frameSize: new DotImaging.Primitives2D.Size(1280, 720),
+                                            fps: 30
+                                          );
+            writer.Open();
+
+            var singleImg = reader.ReadAs<Bgr<byte>>();
+
+            foreach(IImage img in reader)
+            {                
+                writer.Write(img); 
+            }
+            reader.Close();
+            writer.Close();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+            System.Threading.Thread thread = new System.Threading.Thread(new System.Threading.ThreadStart(new Analyser().AnalyseVideo));
+            thread.Start();
+
+            //foreach(FileInfo file in files)
+            //{
+            //    try
+            //    {
+            //        file.Delete();
+            //    }
+            //    catch(Exception exx)
+            //    {
+
+            //    }
+            //}
+            
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DirectoryInfo dirInfo = new DirectoryInfo(currentDir + "/tempImg/");
+            files = dirInfo.GetFiles().OrderBy(p => p.CreationTime).ToArray();
+            int f = new Random().Next(0, files.Length);
+            ImageSource imageToProcess = (new ImageSourceConverter()).ConvertFromString(currentDir + "/tempImg/img" + f + ".jpeg") as ImageSource;
+            image.Source = imageToProcess;
+            //Console.WriteLine(f);
+
+            System.Threading.Thread thread = new System.Threading.Thread(new System.Threading.ThreadStart(makeAvi));
+            thread.Start();
         }
 
     }

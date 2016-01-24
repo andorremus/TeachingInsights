@@ -2,9 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:sparrow="http://sparrowtoolkit.codeplex.com/wpf"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="TeachingInsights2.MainWindow"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" 
+        xmlns:controls="clr-namespace:TeachingInsights2.controls"
+        x:Class="TeachingInsights2.MainWindow"
         Title="Teaching Insights" Height="602" Width="1164"
-        xmlns:local="clr-namespace:TeachingInsights2">
+        xmlns:local="clr-namespace:TeachingInsights2"
+        DataContext="{Binding Main, Source={StaticResource Locator}}"
+        xmlns:vm="clr-namespace:TeachingInsights2.ViewModel">
 
     <DockPanel Height="572" LastChildFill="False" Margin="0,0,6,-1" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Right" Width="1150">
         <Menu DockPanel.Dock="Top" Height="25" HorizontalAlignment="Right" Foreground="#FF191313" FontSize="15" FontWeight="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}" Width="1145">
@@ -58,15 +63,17 @@
 
                     <Button x:Name ="startButton" Content="Start" HorizontalAlignment="Left" VerticalAlignment="Top" Width="107" Click="startButton_click"/>
                 </Grid>
+                <Button Content="Analyse" Click="Button_Click" Margin="0,0,10,0"/>
+                <Button Height="23" Content="Create Video" Margin="0,0,10,0" Click="Button_Click_1"/>
             </StackPanel>
             <Ellipse Name="faceDetectedEllipse" Fill="#FF33339B" HorizontalAlignment="Left" Height="100" Margin="74,358,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
         </Grid>
-        <StackPanel Height="510" VerticalAlignment="Top" Width="890" Margin="0,5,0,0">
-            <StackPanel.DataContext>
-                <local:ViewModel/>
-            </StackPanel.DataContext>
+        <StackPanel x:Name="panel" Height="510" VerticalAlignment="Top" Width="890" Margin="0,5,0,0">
             <Border BorderBrush="Black" BorderThickness="1" Height="336" Margin="0,0,350,20">
-                <Image x:Name="CameraFeed" Margin="9,9,9,25"/>
+                <!-- <controls:WebcamFeed x:Name="webcamFeedControl" Margin="9"/> -->
+                <Image x:Name="image" Margin="9" />
+
+
             </Border>
             <sparrow:SparrowChart Height="77" x:Name="browRaiseChart"  Theme="Grayscale" BorderBrush="Black" FontSize="6">
                 <sparrow:SparrowChart.XAxis>
@@ -87,5 +94,6 @@
                 <sparrow:LineSeries PointsSource="{Binding BrowFurrowCollection}" XPath="X" YPath="Y"/>
             </sparrow:SparrowChart>
         </StackPanel>
+        <DocumentViewer Height="515" VerticalAlignment="Top"/>
     </DockPanel>
 </Window>
