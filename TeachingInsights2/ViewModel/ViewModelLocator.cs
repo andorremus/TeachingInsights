@@ -43,9 +43,12 @@ namespace TeachingInsights2.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<WebcamImageViewModel>();
+            SimpleIoc.Default.Register<VideoPlayerViewModel>();
         }
 
-        public MainViewModel Main
+        public MainViewModel MainVM
         {
             get
             {
@@ -53,7 +56,7 @@ namespace TeachingInsights2.ViewModel
             }
         }
 
-        public WebcamImageViewModel WebcamImage
+        public WebcamImageViewModel WebcamImageVM
         {
             get
             {
@@ -61,11 +64,19 @@ namespace TeachingInsights2.ViewModel
             }
         }
 
-        public LoginViewModel Login
+        public LoginViewModel LoginVM
         {
             get
             {
                 return ServiceLocator.Current.GetInstance<LoginViewModel>();
+            }
+        }
+
+        public VideoPlayerViewModel VideoPlayerVM
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<VideoPlayerViewModel>();
             }
         }
         

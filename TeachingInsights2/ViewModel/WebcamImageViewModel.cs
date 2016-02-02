@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -12,20 +13,32 @@ using System.Windows.Media.Imaging;
 
 namespace TeachingInsights2.ViewModel
 {
-    public class WebcamImageViewModel : DependencyObject
+    public class WebcamImageViewModel : ViewModelBase
     {
-        public static readonly DependencyProperty RenderedImageProperty =
-            DependencyProperty.Register("RenderedImage", typeof(BitmapSource), typeof(WebcamImageViewModel), new FrameworkPropertyMetadata(Utility.GetDefaultImage()));
+        //public static readonly DependencyProperty RenderedImageProperty =
+            //DependencyProperty.Register("RenderedImage", typeof(BitmapSource), 
+                                                            //typeof(WebcamImageViewModel),
+                                                           // new FrameworkPropertyMetadata(Utility.GetDefaultImage(),RenderedImagePropertyChangedHandler));
+        private BitmapSource renderedImage;
 
         public BitmapSource RenderedImage
         {
-            get { return (BitmapSource)GetValue(RenderedImageProperty); }
-            set { SetValue(RenderedImageProperty, value); }
-        }        
+            get { return renderedImage; }
+            set { renderedImage = value; RaisePropertyChanged("RenderedImage"); }
+        }
+
+        //public static void RenderedImagePropertyChangedHandler(DependencyObject sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    // Get instance of current control from sender
+        //    // and property value from e.NewValue
+
+        //    // Set public property on TaregtCatalogControl, e.g.
+        //    ((WebcamImageViewModel)sender).RenderedImage = (BitmapSource)e.NewValue;
+        //}
 
         public WebcamImageViewModel()
         {
-            
+            renderedImage = Utility.GetDefaultImage();
         }
         public void StartCapture()
         {
