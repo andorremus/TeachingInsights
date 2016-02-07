@@ -1,0 +1,64 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+using TeachingInsights2.ViewModel;
+
+namespace TeachingInsights2.View
+{
+    /// <summary>
+    /// Interaction logic for LoginWindow.xaml
+    /// </summary>
+    public partial class LoginWindow : Window
+    {
+        public LoginWindow()
+        {
+            try
+            {
+                InitializeComponent();
+<<<<<<< HEAD
+                //DataContext = new LoginViewModel();
+=======
+                DataContext = new LoginViewModel();
+>>>>>>> e2463ec572b1d936bfeefa59345d7b12e42bee45
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.ToString());
+            }
+            (this.DataContext as LoginViewModel).LoginFailed += LoginWindow_LoginFailed;
+        }
+
+        void LoginWindow_LoginFailed(object sender, EventArgs e)
+        {
+            ErrorBox.Visibility = Visibility.Visible;
+        }
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            { ((dynamic)this.DataContext)._password = ((PasswordBox)sender).Password; }
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.DialogResult = false;
+        }
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            { ((dynamic)this.DataContext)._password = ((PasswordBox)sender).Password; }
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.DialogResult = false;
+        }
+    }
+}
