@@ -2088,7 +2088,7 @@ Crop image top and left side.
 Copy image src to dst. Wraps av_picture_data_copy() above.
 
 </member>
-        <member name="M:libffmpeg.av_fast_padded_malloc(System.Void*,System.UInt32*,System.UInt64)">
+        <member name="M:libffmpeg.av_fast_padded_malloc(System.Void*,System.UInt32*,System.UInt32)">
  Same behaviour av_fast_malloc but the buffer has additional
  FF_INPUT_PADDING_SIZE at the end which will will always be 0.
 
@@ -2096,7 +2096,7 @@ Copy image src to dst. Wraps av_picture_data_copy() above.
  be 0-initialized so that no uninitialized data will ever appear.
 
 </member>
-        <member name="M:libffmpeg.av_fast_malloc(System.Void*,System.UInt32*,System.UInt64)">
+        <member name="M:libffmpeg.av_fast_malloc(System.Void*,System.UInt32*,System.UInt32)">
  Allocate a buffer, reusing the given one if large enough.
 
  Contrary to av_fast_realloc the current buffer contents might not be
@@ -2109,7 +2109,7 @@ Copy image src to dst. Wraps av_picture_data_copy() above.
                  *size 0 if an error occurred.
 
 </member>
-        <member name="M:libffmpeg.av_fast_realloc(System.Void*,System.UInt32*,System.UInt64)">
+        <member name="M:libffmpeg.av_fast_realloc(System.Void*,System.UInt32*,System.UInt32)">
  Reallocate the given block if it is not large enough, otherwise do nothing.
 
  @see av_realloc
@@ -2631,7 +2631,7 @@ Tell if an image really has transparent alpha values.
  (maximum loss for an invalid dst_pix_fmt).
 
 </member>
-        <member name="M:libffmpeg.av_get_codec_tag_string(System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*,System.UInt64,System.UInt32)">
+        <member name="M:libffmpeg.av_get_codec_tag_string(System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*,System.UInt32,System.UInt32)">
  Put a string representing the codec tag codec_tag in buf.
 
  @param buf_size size in bytes of buf
@@ -5099,11 +5099,11 @@ Convert rational to double.
 @return (double) a
 
 </member>
-        <member name="M:libffmpeg.av_max_alloc(System.UInt64)">
+        <member name="M:libffmpeg.av_max_alloc(System.UInt32)">
 Set the maximum size that may me allocated in one block.
 
 </member>
-        <member name="M:libffmpeg.av_size_mult(System.UInt64,System.UInt64,System.UInt64*)">
+        <member name="M:libffmpeg.av_size_mult(System.UInt32,System.UInt32,System.UInt32*)">
 Multiply two size_t values checking for overflow.
 @return  0 if success, AVERROR(EINVAL) if overflow.
 
@@ -5131,7 +5131,7 @@ Duplicate the string s.
 copy of s or NULL if the string cannot be allocated.
 
 </member>
-        <member name="M:libffmpeg.av_calloc(System.UInt64,System.UInt64)">
+        <member name="M:libffmpeg.av_calloc(System.UInt32,System.UInt32)">
 Allocate a block of nmemb * size bytes with alignment suitable for all
 memory accesses (including vectors if available on the CPU) and
 zero all the bytes of the block.
@@ -5142,7 +5142,7 @@ to INT_MAX.
 @return Pointer to the allocated block, NULL if it cannot be allocated.
 
 </member>
-        <member name="M:libffmpeg.av_mallocz(System.UInt64)">
+        <member name="M:libffmpeg.av_mallocz(System.UInt32)">
 Allocate a block of size bytes with alignment suitable for all
 memory accesses (including vectors if available on the CPU) and
 zero all the bytes of the block.
@@ -5160,7 +5160,7 @@ av_realloc().
 @see av_freep()
 
 </member>
-        <member name="M:libffmpeg.av_realloc_f(System.Void*,System.UInt64,System.UInt64)">
+        <member name="M:libffmpeg.av_realloc_f(System.Void*,System.UInt32,System.UInt32)">
 Allocate or reallocate a block of memory.
 This function does the same thing as av_realloc, except:
 - It takes two arguments and checks the result of the multiplication for
@@ -5169,7 +5169,7 @@ This function does the same thing as av_realloc, except:
   leak with the classic "buf = realloc(buf); if (!buf) return -1;".
 
 </member>
-        <member name="M:libffmpeg.av_realloc(System.Void*,System.UInt64)">
+        <member name="M:libffmpeg.av_realloc(System.Void*,System.UInt32)">
 Allocate or reallocate a block of memory.
 If ptr is NULL and size &gt; 0, allocate a new block. If
 size is zero, free the memory block pointed to by ptr.
@@ -5182,7 +5182,7 @@ cannot be reallocated or the function is used to free the memory block.
 @see av_fast_realloc()
 
 </member>
-        <member name="M:libffmpeg.av_malloc(System.UInt64)">
+        <member name="M:libffmpeg.av_malloc(System.UInt32)">
 @}
 
 @addtogroup lavu_mem
@@ -5196,7 +5196,7 @@ be allocated.
 @see av_mallocz()
 
 </member>
-        <member name="M:libffmpeg.av_strerror(System.Int32,System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*,System.UInt64)">
+        <member name="M:libffmpeg.av_strerror(System.Int32,System.SByte!System.Runtime.CompilerServices.IsSignUnspecifiedByte*,System.UInt32)">
  Convert a UTF-8 character (up to 4 bytes) to its 32-bit UCS-4 encoded form.
 
  @param val      Output value, must be an lvalue of type uint32_t.

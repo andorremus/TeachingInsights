@@ -43,9 +43,16 @@ namespace TeachingInsights2.ViewModel
             ////}
 
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<LoginViewModel>();
+            SimpleIoc.Default.Register<WebcamFeedViewModel>();
+            SimpleIoc.Default.Register<VideoPlayerViewModel>();
+            SimpleIoc.Default.Register<TCPClientViewModel>();
+            SimpleIoc.Default.Register<TCPServerViewModel>();
+            SimpleIoc.Default.Register<UserAccountViewModel>();
+
         }
 
-        public MainViewModel Main
+        public MainViewModel MainVM
         {
             get
             {
@@ -53,22 +60,53 @@ namespace TeachingInsights2.ViewModel
             }
         }
 
-        public WebcamImageViewModel WebcamImage
+        public WebcamFeedViewModel WebcamFeedVM
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<WebcamImageViewModel>();
+                return ServiceLocator.Current.GetInstance<WebcamFeedViewModel>();
             }
         }
 
-        public LoginViewModel Login
+        public LoginViewModel LoginVM
         {
             get
             {
                 return ServiceLocator.Current.GetInstance<LoginViewModel>();
             }
         }
-        
+
+        public VideoPlayerViewModel VideoPlayerVM
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<VideoPlayerViewModel>();
+            }
+        }
+
+        public TCPClientViewModel TCPClientVM
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<TCPClientViewModel>();
+            }
+        }
+
+        public TCPServerViewModel TCPServerVM
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<TCPServerViewModel>();
+            }
+        }
+        public UserAccountViewModel UAVM
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<UserAccountViewModel>();
+            }
+        }
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

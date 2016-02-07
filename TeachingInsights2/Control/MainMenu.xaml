@@ -1,0 +1,23 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="TeachingInsights2.Control.MainMenu" 
+             mc:Ignorable="d" Height="38" Width="448">
+    <Grid>
+        <Menu Height="28" HorizontalAlignment="Stretch" Foreground="#FF191313" FontSize="15" FontWeight="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Open"/>
+                <MenuItem Header="_Close"/>
+                <MenuItem Header="_Save"/>
+            </MenuItem>
+            <MenuItem Header="_Account">
+                <MenuItem Header="_Account Settings"/>
+                <MenuItem Header="_Environment Settings"/>
+            </MenuItem>
+            <MenuItem Header="_Help"/>
+            <MenuItem Header="_Settings"/>
+        </Menu>
+    </Grid>
+</UserControl>
