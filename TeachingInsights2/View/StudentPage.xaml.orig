@@ -1,0 +1,63 @@
+<<<<<<< HEAD
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"  
+      xmlns:Controls="clr-namespace:TeachingInsights2.Controls"
+      x:Class="TeachingInsights2.View.StudentPage" 
+      xmlns:View="clr-namespace:TeachingInsights2.View" 
+      mc:Ignorable="d"
+      DataContext="{Binding StudentPageVM, Source={StaticResource Locator}}"    
+	 Title="StudentPage" Height="546.855" Width="1142.928">
+
+        <DockPanel Height="572" LastChildFill="False" Margin="0,0,6,-1" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" >
+            <Controls:MainMenu DockPanel.Dock="Top"  Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1140"/>
+            <StackPanel DockPanel.Dock="Bottom" Height="32" RenderTransformOrigin="0.5,0.5"/>
+            <Grid HorizontalAlignment="Left" Height="510" VerticalAlignment="Top" Width="121">
+                <StackPanel HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="225" RenderTransformOrigin="0.47,0.816" />
+
+            </Grid>
+            <StackPanel x:Name="panel" Height="510" VerticalAlignment="Top" Width="890" Margin="0,5,0,0">
+                <Border BorderBrush="Black" BorderThickness="1" Height="503" Margin="0,0,10,20">
+                    <TabControl>
+                        <TabItem Header="Live Tracking">
+                            <Grid Background="#FFE5E5E5">
+                            <Controls:ClientTCPInterface HorizontalAlignment="Left" Margin="37,269,0,0" VerticalAlignment="Top"/>
+                        </Grid>
+                        </TabItem>
+                        <TabItem Header="Calibration">
+                            <Grid Background="#FFE5E5E5">
+                                <Controls:WebcamFeed HorizontalAlignment="Left" Width="419" Margin="10,14,0,194"/>
+                                <Button Content="Analyse" Margin="452,284,205,169"/>
+
+                                <Controls:VideoPlayer HorizontalAlignment="Left" Margin="434,31,0,0" VerticalAlignment="Top" Height="248" Width="394"/>
+                                <Controls:ConfusionChart HorizontalAlignment="Left" Margin="10,348,0,0" VerticalAlignment="Top" Height="109" Width="325"/>
+                                <Controls:BrowFurrowChart HorizontalAlignment="Left" Margin="415,351,0,0" VerticalAlignment="Top" Height="112" Width="391"/>                            
+                        </Grid>
+                        </TabItem>
+                        <TabItem Header="My Account">
+                            <Grid Background="#FFE5E5E5">
+                                <View:UserAccountView HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="453" Width="852"/>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+
+
+                </Border>
+            </StackPanel>
+        </DockPanel>
+        </Page>
+=======
+﻿<Page x:Class="TeachingInsights2.View.StudentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d"
+	Title="StudentPage" Height="388" Width="627">
+
+    <Grid>
+
+    </Grid>
+</Page>
+>>>>>>> 3c7af017195d983780dc73f28961f02462e626a8

@@ -1,0 +1,106 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"        
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:local="clr-namespace:TeachingInsights2"
+<<<<<<< HEAD
+        xmlns:Controls="clr-namespace:TeachingInsights2.Controls" 
+        xmlns:View="clr-namespace:TeachingInsights2.View" mc:Ignorable="d"
+=======
+        xmlns:Controls="clr-namespace:TeachingInsights2.Controls" xmlns:View="clr-namespace:TeachingInsights2.View" mc:Ignorable="d"
+>>>>>>> 3c7af017195d983780dc73f28961f02462e626a8
+        x:Class="TeachingInsights2.MainWindow"
+        Title="Teaching Insights" Height="602" Width="1164"
+        DataContext="{Binding MainVM, Source={StaticResource Locator}}"
+        Icon="/resources/img/loginPageIcon.ico">
+<<<<<<< HEAD
+
+    <!--<DockPanel Height="572" LastChildFill="False" Margin="0,0,6,-1" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" >
+        <Controls:MainMenu DockPanel.Dock="Top"  Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1140"/>
+        <StackPanel DockPanel.Dock="Bottom" Height="32" RenderTransformOrigin="0.5,0.5"/>
+        <Grid HorizontalAlignment="Left" Height="510" VerticalAlignment="Top" Width="245">
+            <StackPanel HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="225" RenderTransformOrigin="0.47,0.816" >
+                
+                <Button Content="Analyse" Click="Button_Click" Margin="0,0,10,0"/>
+            </StackPanel>
+            <Controls:ClientTCPInterface Margin="10,452,-77,0" Visibility="{Binding MainVM.IsStudent, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+=======
+    
+
+    <DockPanel Height="572" LastChildFill="False" Margin="0,0,6,-1" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" >
+        <Controls:MainMenu DockPanel.Dock="Top"  Height="28" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <StackPanel DockPanel.Dock="Bottom" Height="32" RenderTransformOrigin="0.5,0.5"/>
+        <Grid HorizontalAlignment="Left" Height="510" VerticalAlignment="Top" Width="245">
+            <StackPanel HorizontalAlignment="Left" Height="270" Margin="10,10,0,0" VerticalAlignment="Top" Width="225" RenderTransformOrigin="0.47,0.816">
+                <Grid Height="30" Margin="0,0,10,0">
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="95" RenderTransformOrigin="0.703,0.476" Content="Attention Level"/>
+                    <TextBlock x:Name="attentionValue" HorizontalAlignment="Left" Margin="114,5,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="47"/>
+                </Grid>
+                <Separator/>
+                <Grid Height="30" Margin="0,0,10,0">
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="136" RenderTransformOrigin="0.703,0.476" Content="Brow Furrow Intensity"/>
+                    <TextBlock x:Name="browFurrowValue" HorizontalAlignment="Left" Margin="136,5,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="47"/>
+                </Grid>
+                <Separator/>
+                <Grid Height="30" Margin="0,0,10,0">
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="136" RenderTransformOrigin="0.703,0.476" Content="Eye Closure Intensity"/>
+                    <TextBlock x:Name="eyeClosureValue" HorizontalAlignment="Left" Margin="136,5,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="47"/>
+                </Grid>
+                <Separator/>
+                <Grid Height="30" Margin="0,0,10,0">
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="136" RenderTransformOrigin="0.703,0.476" Content="Brow Raise Intensity"/>
+                    <TextBlock x:Name="browRaiseValue" HorizontalAlignment="Left" Margin="136,5,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="47"/>
+                </Grid>
+                <Separator/>
+                <Grid Height="25">
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="215" RenderTransformOrigin="0.703,0.476" Content="Chin Raise Intensity" Margin="0,0,0,-5"/>
+                    <TextBlock x:Name="chinRaiseValue" HorizontalAlignment="Left" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="56" RenderTransformOrigin="3.5,0.312" Margin="130,5,0,0"/>
+                </Grid>
+                <Separator/>
+                <Grid Height="25">
+                    <Label HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Width="215" RenderTransformOrigin="0.703,0.476" Content="Engagement Level" Margin="0,0,0,-5"/>
+                    <TextBlock x:Name="engagementValue" HorizontalAlignment="Left" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="56" RenderTransformOrigin="3.5,0.312" Margin="130,5,0,0"/>
+                </Grid>
+                <Separator/>
+                <Button Content="Analyse" Click="Button_Click" Margin="0,0,10,0"/>
+            </StackPanel>
+            <Controls:ServerTCPInterface Margin="0,426,137,10"/>
+
+
+            
+            <Ellipse x:Name="faceDetectedEllipse" Fill="#FF33339B" HorizontalAlignment="Left" Height="100" Margin="74,358,0,0" Stroke="Black" VerticalAlignment="Top" Width="100"/>
+>>>>>>> 3c7af017195d983780dc73f28961f02462e626a8
+        </Grid>
+        <StackPanel x:Name="panel" Height="510" VerticalAlignment="Top" Width="890" Margin="0,5,0,0">
+            <Border BorderBrush="Black" BorderThickness="1" Height="503" Margin="0,0,10,20">
+                <TabControl>
+                    <TabItem Header="Live Tracking">
+                        <Grid Background="#FFE5E5E5">
+                            <Controls:WebcamFeed HorizontalAlignment="Left" Width="852" Margin="10,14,0,26"/>                            
+                        </Grid>
+                    </TabItem>
+<<<<<<< HEAD
+                    <TabItem Header="Calibration">
+                        <Grid Background="#FFE5E5E5">
+                            <Controls:WebcamFeed HorizontalAlignment="Left" Width="852" Margin="10,14,0,26"/>
+                        </Grid>
+                    </TabItem>
+=======
+>>>>>>> 3c7af017195d983780dc73f28961f02462e626a8
+                    <TabItem Header="My Account">
+                        <Grid Background="#FFE5E5E5">
+                            <View:UserAccountView HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="453" Width="852"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+
+
+            </Border>
+        </StackPanel>
+<<<<<<< HEAD
+    </DockPanel>-->
+=======
+    </DockPanel>
+>>>>>>> 3c7af017195d983780dc73f28961f02462e626a8
+</Window>
