@@ -1,0 +1,20 @@
+﻿<UserControl x:Class="TeachingInsights2.Controls.ConfusionChart"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             xmlns:sparrow="http://sparrowtoolkit.codeplex.com/wpf" Height="148" Width="388"
+             DataContext="{Binding ConfusionChartVM, Source={StaticResource Locator}}">
+    <Grid>
+        <sparrow:SparrowChart x:Name="browRaiseChart"  Theme="Grayscale" BorderBrush="Black" FontSize="6" >
+            <sparrow:SparrowChart.XAxis>
+                <sparrow:LinearXAxis Header="Brow Raise Intensity Level" MaxValue="100"/>
+            </sparrow:SparrowChart.XAxis>
+            <sparrow:SparrowChart.YAxis>
+                <sparrow:LinearYAxis MaxValue="100" MajorLineSize="10"/>
+            </sparrow:SparrowChart.YAxis>
+            <sparrow:LineSeries PointsSource="{Binding Collection}" XPath="X" YPath="Y" />
+        </sparrow:SparrowChart>
+    </Grid>
+</UserControl>

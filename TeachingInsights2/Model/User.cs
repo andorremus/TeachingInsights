@@ -1,51 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.ComponentModel;
-
-namespace TeachingInsights2.Model
+namespace TeachingInsights2
 {
-    public class User : INotifyPropertyChanged
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
+
+    [Table("TeachingInsights.User")]
+    public partial class User
     {
-        private String username;
-        private String name;
-        private String password;
-        
-        public String Username
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public User()
         {
-            get { return username;}
-            set
-            {
-                username = value;
-                OnPropertyChanged("Username");
-            }
+            UserHasCourses = new HashSet<UserHasCourse>();
+            CalibrationSettings = new HashSet<CalibrationSetting>();
         }
 
-        public String Name
-        {
-            get { return name;}
-            set 
-            {
-                name = value;
-                OnPropertyChanged("Name");
-            }
-        }
+        [Key]
+        [StringLength(64)]
+        public string username { get; set; }
+
+        [Required]
+        [StringLength(128)]
+        public string password { get; set; }
+
+        [Required]
+        [StringLength(45)]
+        public string firstName { get; set; }
+
+        [Required]
+        [StringLength(45)]
+        public string lastName { get; set; }
+
+        [Required]
+        [StringLength(45)]
+        public string emailAddress { get; set; }
+
+        public int userTypeId { get; set; }
+
+        public int studentId { get; set; }
+
+        [StringLength(45)]
+        public string currentIpAddress { get; set; }
+
+        [Column(TypeName = "bit")]
+        public bool isConnected { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UserHasCourse> UserHasCourses { get; set; }
+
+        public virtual UserType UserType { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CalibrationSetting> CalibrationSettings { get; set; }
 
 
-
-        #region INotifyPropertyChanged Members
-       public event PropertyChangedEventHandler PropertyChanged;
-       private void OnPropertyChanged(string propertyName)
-       {
-           if (PropertyChanged != null)
-           {
-               PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-           }
-       }
-       #endregion
     }
-
-    
 }

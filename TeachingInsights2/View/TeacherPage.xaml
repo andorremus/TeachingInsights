@@ -1,0 +1,40 @@
+﻿<Page x:Class="TeachingInsights2.View.TeacherPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d"
+      xmlns:Controls="clr-namespace:TeachingInsights2.Controls"
+      xmlns:View="clr-namespace:TeachingInsights2.View" 
+      DataContext="{Binding TeacherPageVM, Source={StaticResource Locator}}" 
+	  Title="TeacherPage" Height="552.638" Width="1019.5">
+    <Page.Resources>
+
+    </Page.Resources>
+    <DockPanel Height="572" LastChildFill="False" Margin="0,0,6,-1" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Stretch" >
+        <Controls:MainMenu DockPanel.Dock="Top"  Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="1014"/>
+        <StackPanel DockPanel.Dock="Bottom" Height="32" RenderTransformOrigin="0.5,0.5"/>
+        <Grid HorizontalAlignment="Left" Height="510" VerticalAlignment="Top" Width="121">
+            <StackPanel HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="225" RenderTransformOrigin="0.47,0.816" />
+
+        </Grid>
+        <StackPanel x:Name="panel" Height="510" VerticalAlignment="Top" Width="890" Margin="0,5,0,0">
+            <Border BorderBrush="Black" BorderThickness="1" Height="503" Margin="0,0,10,20">
+                <TabControl>
+                    <TabItem Header="Live Tracking">
+                        <Grid Background="#FFE5E5E5">
+                            <Controls:ServerTCPInterface/>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="My Account">
+                        <Grid Background="#FFE5E5E5">
+                            <View:UserAccountView HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="453" Width="852"/>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+
+
+            </Border>
+        </StackPanel>
+    </DockPanel>
+</Page>

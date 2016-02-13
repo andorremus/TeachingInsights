@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.Collections.ObjectModel;
+using GalaSoft.MvvmLight;
 
 namespace TeachingInsights2
 {
-    public class DataViewModel
+    public class DataViewModel : ViewModelBase
     {
         public static ObservableCollection<Point> Collection { get; set; }
         public static ObservableCollection<Point> BrowFurrowCollection { get; set; }

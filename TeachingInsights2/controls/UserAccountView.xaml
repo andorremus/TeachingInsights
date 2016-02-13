@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="TeachingInsights2.View.UserAccountView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d"
+             DataContext="{Binding UAVM, Source={StaticResource Locator}}" Height="378" Width="426">
+    <Grid Background="#FFE2DDDD">
+        <StackPanel HorizontalAlignment="Left" Height="368" VerticalAlignment="Top" Width="416">
+            <Grid Height="27">
+                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding CurrentUser.firstName}" VerticalAlignment="Top" Width="120" Margin="92,0,0,0"/>
+                <Label Content="First Name" HorizontalAlignment="Left" VerticalAlignment="Top" Width="87" />
+            </Grid>
+            <Grid Height="27">
+                <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="{Binding CurrentUser.lastName}" VerticalAlignment="Top" Width="120" Margin="92,0,0,0"/>
+                <Label Content="Last Name" HorizontalAlignment="Left" VerticalAlignment="Top" Width="87" />
+            </Grid>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

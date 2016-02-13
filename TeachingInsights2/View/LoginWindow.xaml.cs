@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using TeachingInsights2.ViewModel;
 
 namespace TeachingInsights2.View
 {
@@ -24,11 +25,27 @@ namespace TeachingInsights2.View
             try
             {
                 InitializeComponent();
+                //DataContext = new LoginViewModel();
             }
             catch(Exception e)
             {
                 Console.WriteLine(e.ToString());
             }
+            (this.DataContext as LoginViewModel).LoginFailed += LoginWindow_LoginFailed;
+        }
+
+        void LoginWindow_LoginFailed(object sender, EventArgs e)
+        {
+            ErrorBox.Visibility = Visibility.Visible;
+        }
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            { ((dynamic)this.DataContext)._password = ((PasswordBox)sender).Password; }
+        }
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            this.DialogResult = false;
         }
     }
 }

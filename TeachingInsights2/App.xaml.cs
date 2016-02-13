@@ -5,6 +5,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using TeachingInsights2.View;
+using TeachingInsights2.ViewModel;
 
 namespace TeachingInsights2
 {
@@ -13,5 +15,10 @@ namespace TeachingInsights2
     /// </summary>
     public partial class App : Application
     {
+
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            this.Properties["currentUser"] = null;
+        }
     }
 }
